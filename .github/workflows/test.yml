@@ -31,14 +31,21 @@ jobs:
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
-
+        
+    # Runs a set of commands using the runners shell
+    - name: Generate commit log
+      run: |     
+       git log --pretty=format:"GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S') %n%nLatest Commit %H%n%n    %s%n%n    %b" --date=short -n 1 > commit_msg.log
+       cat commit_msg.log
+      
     # Test Env Variable
     - name: Test Env Variable
       env:
         key_1: ${{ secrets.KEY_1 }}
         key_2: "Hi~"
+        commit_msg: ${{ cat commit_msg.log }}
       run: |
         echo "Env key_1: ${key_1}"
         echo "Env key_2: ${key_2}"
         echo "Secrets key_1: ${{ secrets.KEY_1 }}"
-        echo "Site updated: ${date +'%Y-%m-%d %H:%M:%S'}%n${{ github.event.head_commit.message }}"
+        echo "Env commit_msg: ${{ commit_msg }}"
