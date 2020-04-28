@@ -63,7 +63,7 @@ jobs:
         
         echo "-------- Way 2: ${APP_NAME} --------"
         echo "Env COMMIT_MSG: ${COMMIT_MSG}"
-        echo "Env APP_NAME: ${env.APP_NAME}"
+        echo "Env APP_NAME: ${APP_NAME}"
         echo "Env SITE_UPDATED_LOG: ${SITE_UPDATED_LOG}"
       
     - name: Test Env Variable as input parameter 1
