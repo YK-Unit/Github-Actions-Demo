@@ -37,7 +37,7 @@ jobs:
       run: |     
        git log --pretty=format:"GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S') %n%nLatest Commit %H%n%n    %s%n%n    %b" --date=short -n 1 > commit_msg.log
        cat commit_msg.log
-       export COMMIT_MSG_TEMP=$(commit_msg.log)
+       export COMMIT_MSG_TEMP=$(cat commit_msg.log)
        echo "::set-env name=COMMIT_MSG::$COMMIT_MSG_TEMP"
        echo "COMMIT_MSG: ${{ env.COMMIT_MSG }}"
        
@@ -45,12 +45,17 @@ jobs:
        echo "::set-env name=APP_NAME::$APP_NAME_TEMP"
        echo "APP_NAME: ${{ env.APP_NAME }}"
       
-    - name: Test Env Variable 1
+    - name: Test Env Variable as input parameter 1
       uses: wxdlong/hello-action@v7
       with:
         who-to-greet: ${{ env.COMMIT_MSG }}  
-      
-    - name: Test Env Variable 2
+   
+    - name: Test Env Variable as input parameter 2
+      uses: wxdlong/hello-action@v7
+      with:
+        who-to-greet: ${{ env.APP_NAME }} 
+   
+    - name: Test Env Variable
       env:
         key_1: ${{ secrets.KEY_1 }}
         key_2: "Hi~"
