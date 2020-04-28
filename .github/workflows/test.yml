@@ -50,7 +50,7 @@ jobs:
         echo "Secrets key_1: ${{ secrets.KEY_1 }}"
         echo "Env commit_msg: ${commit_msg}"
         
-    - name: Test with 
+    - name: Test Action Parameter 
       uses: wxdlong/hello-action@v7
       with:
-        who-to-greet: 'Mona the Octocat'
+        who-to-greet: 'Mona the Octocat %n Hi /n HELLO ${cat commit_msg.log}'
