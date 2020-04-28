@@ -35,7 +35,7 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Generate Env Variable
       run: |     
-       git log --pretty=format:"GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S') %n%nLatest Commit %H%n%n    %s%n%n    %b" --date=short -n 1 > commit_msg.log
+       git log --pretty=format:"GitHub Actions Auto Builder at $(date -u +'%Y-%m-d %H:%M:%S') %n%nLatest Commit %H%n%n    %s%n%n    %b" --date=short -n 1 > commit_msg.log
        cat commit_msg.log
        COMMIT_MSG_TEMP=$(cat commit_msg.log)
        export COMMIT_MSG_TEMP
@@ -46,7 +46,7 @@ jobs:
        echo "::set-env name=APP_NAME::$APP_NAME_TEMP"
        echo "APP_NAME: ${{ env.APP_NAME }}"
        
-       export SITE_UPDATED_LOG_TEMP="(GithubActions) Site updated: $(date +'%Y-%m-%d %H:%M:%S')"
+       export SITE_UPDATED_LOG_TEMP="(GithubActions) Site updated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
        echo "::set-env name=SITE_UPDATED_LOG::$SITE_UPDATED_LOG_TEMP"
        echo "SITE_UPDATED_LOG: ${{ env.SITE_UPDATED_LOG }}"
       
