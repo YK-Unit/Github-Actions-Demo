@@ -50,6 +50,8 @@ jobs:
         echo "Env key_2: ${key_2}"
         echo "Secrets key_1: ${{ secrets.KEY_1 }}"
         echo "Env commit_msg: ${commit_msg}"
+        echo "::set-env name=COMMIT_MSG::$(cat commit_msg.log)"
+        echo "Env COMMIT_MSG: ${COMMIT_MSG}"
         
     - name: Test Action Parameter 
       uses: wxdlong/hello-action@v7
