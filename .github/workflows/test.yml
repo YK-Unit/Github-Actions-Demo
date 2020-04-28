@@ -33,33 +33,35 @@ jobs:
         echo test, and deploy your project.
         
     # Runs a set of commands using the runners shell
-    - name: Generate commit log
+    - name: Generate Env Variable
       run: |     
        git log --pretty=format:"GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S') %n%nLatest Commit %H%n%n    %s%n%n    %b" --date=short -n 1 > commit_msg.log
        cat commit_msg.log
+       export COMMIT_MSG_TEMP=$(commit_msg.log)
+       echo "::set-env name=COMMIT_MSG::$COMMIT_MSG_TEMP"
+       echo "COMMIT_MSG: ${{ env.COMMIT_MSG }}"
        
-    - name: Create release APK name
-      run: |
-        export APK_NAME="release_$(date +'%Y-%m-%d')"
-        echo "::set-env name=NEW_APK_NAME::$APK_NAME"
+       export APP_NAME_TEMP="Github-Actions-Demo_release_$(date +'%Y-%m-%d')"
+       echo "::set-env name=APP_NAME::$APP_NAME_TEMP"
+       echo "APP_NAME: ${{ env.APP_NAME }}"
       
-    # Test Env Variable
-    - name: Test Env Variable
+    - name: Test Env Variable 1
+      uses: wxdlong/hello-action@v7
+      with:
+        who-to-greet: ${{ env.COMMIT_MSG }}  
+      
+    - name: Test Env Variable 2
       env:
         key_1: ${{ secrets.KEY_1 }}
         key_2: "Hi~"
-        # https://github.com/actions/starter-workflows/issues/68#issuecomment-524665878
-        commit_msg: $(cat commit_msg.log)
+        app_name: ${{ env.APP_NAME }}
       run: |
         echo "Env key_1: ${key_1}"
-        echo "Env key_2: ${key_2}"
         echo "Secrets key_1: ${{ secrets.KEY_1 }}"
-        echo "Env commit_msg: ${commit_msg}"
-        echo "::set-env name=COMMIT_MSG::$(cat commit_msg.log)"
-        echo "Env COMMIT_MSG: ${{ env.COMMIT_MSG }}"
-        echo "Env NEW_APK_NAME: ${{ env.NEW_APK_NAME }}"
+
+        echo "Env key_2: ${key_2}"
         
-    - name: Test Action Parameter 
-      uses: wxdlong/hello-action@v7
-      with:
-        who-to-greet: 'Mona the Octocat %n Hi /n HELLO $(cat commit_msg.log) /n ${{ env.COMMIT_MSG }} /n ${{ env.NEW_APK_NAME }}'
+        echo "Env COMMIT_MSG: ${{ env.COMMIT_MSG }}"
+        echo "Env APP_NAME: ${{ env.APP_NAME }}"
+        echo "Env app_name: ${app_name}"
+
