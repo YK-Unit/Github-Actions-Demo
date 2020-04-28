@@ -37,13 +37,18 @@ jobs:
       run: |     
        git log --pretty=format:"GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S') %n%nLatest Commit %H%n%n    %s%n%n    %b" --date=short -n 1 > commit_msg.log
        cat commit_msg.log
-       export COMMIT_MSG_TEMP=$(cat commit_msg.log)
+       COMMIT_MSG_TEMP=$(cat commit_msg.log)
+       export COMMIT_MSG_TEMP
        echo "::set-env name=COMMIT_MSG::$COMMIT_MSG_TEMP"
        echo "COMMIT_MSG: ${{ env.COMMIT_MSG }}"
        
        export APP_NAME_TEMP="Github-Actions-Demo_release_$(date +'%Y-%m-%d')"
        echo "::set-env name=APP_NAME::$APP_NAME_TEMP"
        echo "APP_NAME: ${{ env.APP_NAME }}"
+       
+       export SITE_UPDATED_LOG_TEMP="(GithubActions) Site updated: $(date +'%Y-%m-%d %H:%M:%S')"
+       echo "::set-env name=SITE_UPDATED_LOG::$SITE_UPDATED_LOG_TEMP"
+       echo "SITE_UPDATED_LOG: ${{ env.SITE_UPDATED_LOG }}"
       
     - name: Test Env Variable as input parameter 1
       uses: wxdlong/hello-action@v7
@@ -53,7 +58,7 @@ jobs:
     - name: Test Env Variable as input parameter 2
       uses: wxdlong/hello-action@v7
       with:
-        who-to-greet: ${{ env.APP_NAME }} 
+        who-to-greet: ${{ env.APP_NAME }} ${{ env.SITE_UPDATED_LOG }} 
    
     - name: Test Env Variable
       env:
@@ -69,4 +74,5 @@ jobs:
         echo "Env COMMIT_MSG: ${{ env.COMMIT_MSG }}"
         echo "Env APP_NAME: ${{ env.APP_NAME }}"
         echo "Env app_name: ${app_name}"
+        echo "Env SITE_UPDATED_LOG: ${SITE_UPDATED_LOG}"
 
