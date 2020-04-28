@@ -43,7 +43,8 @@ jobs:
       env:
         key_1: ${{ secrets.KEY_1 }}
         key_2: "Hi~"
-        commit_msg: ${cat commit_msg.log}
+        # https://github.com/actions/starter-workflows/issues/68#issuecomment-524665878
+        commit_msg: $(cat commit_msg.log)
       run: |
         echo "Env key_1: ${key_1}"
         echo "Env key_2: ${key_2}"
@@ -53,4 +54,4 @@ jobs:
     - name: Test Action Parameter 
       uses: wxdlong/hello-action@v7
       with:
-        who-to-greet: 'Mona the Octocat %n Hi /n HELLO ${cat commit_msg.log}'
+        who-to-greet: 'Mona the Octocat %n Hi /n HELLO $(cat commit_msg.log)'
