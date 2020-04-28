@@ -46,10 +46,10 @@ jobs:
        echo "::set-env name=APP_NAME::$APP_NAME_TEMP"
        echo "APP_NAME: ${{ env.APP_NAME }}"
        
-       export SITE_UPDATED_LOG_TEMP="(GithubActions) Site updated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+       export SITE_UPDATED_LOG_TEMP="(GithubActions) Site updated at $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
        echo "::set-env name=SITE_UPDATED_LOG::$SITE_UPDATED_LOG_TEMP"
        echo "SITE_UPDATED_LOG: ${{ env.SITE_UPDATED_LOG }}"
-       
+       echo ""
        echo "实践证明，刚刚手动设置生成的环境变量在当前不可用，需要到next-step才能用"
        
     - name: How To Use Env Variable 
@@ -60,7 +60,7 @@ jobs:
         echo "Env COMMIT_MSG: ${{ env.COMMIT_MSG }}"
         echo "Env APP_NAME: ${{ env.APP_NAME }}"
         echo "Env SITE_UPDATED_LOG: ${SITE_UPDATED_LOG}"
-        
+        echo ""
         echo "-------- Way 2: ${APP_NAME} --------"
         echo "Env COMMIT_MSG: ${COMMIT_MSG}"
         echo "Env APP_NAME: ${APP_NAME}"
