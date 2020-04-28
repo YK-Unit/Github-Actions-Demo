@@ -49,3 +49,8 @@ jobs:
         echo "Env key_2: ${key_2}"
         echo "Secrets key_1: ${{ secrets.KEY_1 }}"
         echo "Env commit_msg: ${commit_msg}"
+        
+    - name: Test with 
+      uses: wxdlong/hello-action@v7
+      with:
+        who-to-greet: 'Mona the Octocat'
