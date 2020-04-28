@@ -37,6 +37,11 @@ jobs:
       run: |     
        git log --pretty=format:"GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S') %n%nLatest Commit %H%n%n    %s%n%n    %b" --date=short -n 1 > commit_msg.log
        cat commit_msg.log
+       
+    - name: Create release APK name
+      run: |
+        export APK_NAME="release_$(date +'%Y-%m-%d')"
+        echo "::set-env name=NEW_APK_NAME::$APK_NAME"
       
     # Test Env Variable
     - name: Test Env Variable
@@ -51,9 +56,10 @@ jobs:
         echo "Secrets key_1: ${{ secrets.KEY_1 }}"
         echo "Env commit_msg: ${commit_msg}"
         echo "::set-env name=COMMIT_MSG::$(cat commit_msg.log)"
-        echo "Env COMMIT_MSG: ${COMMIT_MSG}"
+        echo "Env COMMIT_MSG: ${{ env.COMMIT_MSG }}"
+        echo "Env NEW_APK_NAME: ${{ env.NEW_APK_NAME }}"
         
     - name: Test Action Parameter 
       uses: wxdlong/hello-action@v7
       with:
-        who-to-greet: 'Mona the Octocat %n Hi /n HELLO $(cat commit_msg.log)'
+        who-to-greet: 'Mona the Octocat %n Hi /n HELLO $(cat commit_msg.log) /n ${{ env.COMMIT_MSG }} /n ${{ env.NEW_APK_NAME }}'
