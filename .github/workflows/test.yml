@@ -36,8 +36,9 @@ jobs:
     - name: Test Env Variable
       env:
         key_1: ${{ secrets.KEY_1 }}
-        commit_msg: "Site updated: ${date +'%Y-%m-%d %H:%M:%S'}/n${{ github.event.head_commit.message }}"
+        key_2: "Hi~"
       run: |
         echo "Env key_1: ${key_1}"
-        echo "Env commit_msg: ${commit_msg}"
+        echo "Env key_2: ${key_2}"
+        echo "Secrets key_1: ${{ secrets.KEY_1 }}"
         echo "Site updated: ${date +'%Y-%m-%d %H:%M:%S'}%n${{ github.event.head_commit.message }}"
